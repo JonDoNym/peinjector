@@ -12,7 +12,7 @@ The executable file format on the Windows platform is PE COFF. The peinjector pr
 -	Plain C, no external libraries required (peinjector). 
 -	MITM integration is available in C, Python and Java. A sample Python MITM implementation is included.
 -	Foolproof, mobile-ready web interface. Anyone who can configure a home router can configure the injector server.
--	Easy to use integrated shellcode factory, including re-verse shells, meterpreter, ... or own shellcode. Everything is available in 32 and 64 bit with optional automated encryption to drop AV detection rates. Custom shellcode can be injected directly or as a new thread. 
+-	Easy to use integrated shellcode factory, including reverse shells, meterpreter, ... or own shellcode. Everything is available in 32 and 64 bit with optional automated encryption. Custom shellcode can be injected directly or as a new thread. 
 -	An awesome about page and much more, check it out.
 
 ## peinjector
