@@ -1146,18 +1146,21 @@ bool peinfect_infect_full_file(char *infile, PEINFECT *in, char *outfile) {
     /* Get file size and allocate buffer */
     fseek(fh, 0L, SEEK_END);
     size_t size = ftell(fh);
+    size_t read_size = 0;
     rewind(fh);
     file_mem = malloc(size);
 
     if (file_mem != NULL) {
       /* Load file into buffer */
-      fread(file_mem, size, 1, fh);
+      read_size = fread(file_mem, size, 1, fh);
       fclose(fh);
       fh = NULL;
 
       /* Process file in memory */
-      returnVar = peinfect_infect_full(file_mem, size, in, &pefile);
-
+      if (read_size == 1) {
+        returnVar = peinfect_infect_full(file_mem, size, in, &pefile);
+      }
+      
       /* free buffer after use */
       free(file_mem);
 
@@ -1296,18 +1299,21 @@ bool peinfect_infect_patch_file(char *infile, PEINFECT *in) {
     /* Get file size and allocate buffer */
     fseek(fh, 0L, SEEK_END);
     size_t size = MAX(ftell(fh), 4096);
+    size_t read_size = 0;
     rewind(fh);
     file_mem = malloc(size);
 
     if (file_mem != NULL) {
       /* Load file into buffer */
-      fread(file_mem, size, 1, fh);
+      read_size = fread(file_mem, size, 1, fh);
       fclose(fh);
       fh = NULL;
 
       /* Process file in memory */
-      returnVar = peinfect_infect_patch(file_mem, size, in, &patch);
-
+      if (read_size == 1) {
+        returnVar = peinfect_infect_patch(file_mem, size, in, &patch);
+      }
+      
       /* free buffer after use */
       free(file_mem);
 

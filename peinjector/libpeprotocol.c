@@ -81,7 +81,7 @@ static inline void __peserver_debug(PESERVER *server, int sock, char *msg, ...) 
 
   pthread_mutex_lock(&server->debug_mutex);
   /* print timestamp */
-  printf(buffer);
+  printf("%s", buffer);
   if (sock != 0) {
     printf("[SOCK:%d] ", sock);
   }
@@ -642,22 +642,25 @@ static void inline __peprotocol_process_get_config(PEPROTOCOL *protocol, PESERVE
     /* Get file size and allocate buffer */
     fseek(conf, 0L, SEEK_END);
     size_t size = ftell(conf);
+    size_t read_size = 0;
     rewind(conf);
     file_mem = malloc(size + sizeof(PEPROTOCOL));
 
     if (file_mem != NULL) {
       /* Load file into buffer */
-      fread(file_mem + sizeof(PEPROTOCOL), size, 1, conf);
+      read_size = fread(file_mem + sizeof(PEPROTOCOL), size, 1, conf);
       fclose(conf);
       conf = NULL;
 
       /* Send the buffered config-file to the pe-control */
-      memcpy(file_mem, protocol->token, PESERVER_TOKEN_SIZE);
-      protocol = (PEPROTOCOL *) file_mem;
-      protocol->command = CMD_RECEIVE_SUCCESS;
-      protocol->size = size;
-      send(sock, (const void*) protocol, (sizeof(PEPROTOCOL) + protocol->size), 0);
-
+      if (read_size == 1) {
+        memcpy(file_mem, protocol->token, PESERVER_TOKEN_SIZE);
+        protocol = (PEPROTOCOL *) file_mem;
+        protocol->command = CMD_RECEIVE_SUCCESS;
+        protocol->size = size;
+        send(sock, (const void*) protocol, (sizeof(PEPROTOCOL) + protocol->size), 0);
+      }
+      
       /* free buffer after use */
       free(file_mem);
     }

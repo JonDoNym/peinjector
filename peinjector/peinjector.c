@@ -37,15 +37,21 @@ static inline unsigned char* __read_file(char *file, size_t *memsize) {
     /* Get file size and allocate buffer */
     fseek(fh, 0L, SEEK_END);
     size_t size = ftell(fh);
+    size_t size_read = 0;
     rewind(fh);
     file_mem = malloc(size);
 
     if (file_mem != NULL) {
       /* Load file into buffer */
-      fread(file_mem, size, 1, fh);
+      size_read = fread(file_mem, size, 1, fh);
       fclose(fh);
       fh = NULL;
 
+      if (size_read != 1) {
+        free(file_mem);
+        file_mem = NULL;
+      }
+      
       /* Return buffer */
       *memsize = size;
       return file_mem;

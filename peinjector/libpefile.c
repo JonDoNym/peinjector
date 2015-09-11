@@ -364,18 +364,21 @@ bool pefile_read_file(char *file, PEFILE_READ_OPTIONS *options, PEFILE *out) {
     /* Get file size and allocate buffer */
     fseek(fh, 0L, SEEK_END);
     size_t size = ftell(fh);
+    size_t read_size = 0;
     rewind(fh);
     file_mem = malloc(size);
 
     if (file_mem != NULL) {
       /* Load file into buffer */
-      fread(file_mem, size, 1, fh);
+      read_size = fread(file_mem, size, 1, fh);
       fclose(fh);
       fh = NULL;
 
       /* Process PE file in memory */
-      returnVar = pefile_read_mem(file_mem, size, options, out);
-
+      if (read_size == 1) {
+        returnVar = pefile_read_mem(file_mem, size, options, out);
+      }
+      
       /* free buffer after use */
       free(file_mem);
     }

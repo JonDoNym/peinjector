@@ -95,7 +95,7 @@ static inline void __peserver_debug(PESERVER *server, int sock, char *msg, ...) 
 
   pthread_mutex_lock(&server->debug_mutex);
   /* print timestamp */
-  printf(buffer);
+  printf("%s", buffer);
   if (sock != 0) {
     printf("[SOCK:%d] ", sock);
   }
