@@ -76,13 +76,13 @@ Provides different infection methods, removes integrity checks, certificates, et
                 |         |l t|           |l .|              | 
                 +---------+---+           +---+--------------+ 
 
-### peinjector -
+### peinjector
 Provides PE file patching as a service. Just send the raw header of your PE file and you’ll receive a custom-made patch for it. Can be remotely controlled via a command protocol.
 
-### peinjector-control -
+### peinjector-control
 Web interface to configure and control a peinjector server. A small shellcode factory with some basic shellcodes, automatic encryptoin/obfuscation and thread generation is provided - alternatively, custom shellcode can be injected.
 
-### peinjector-interceptor -
+### peinjector-interceptor
 Sample MITM integration. Based on Python and libmproxy, supports SSL interception, can act as transparent Proxy, HTTP Proxy, ... . Provides seamless PE patching capabilities.
 
 ## related projects
