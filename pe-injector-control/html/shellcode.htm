@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- ^ this 3 Meta-Tags firstn;  -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>peinjector-control</title>
+
+    <!-- Bootstrap-CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap-Theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- second Theme -->
+    <link href="css/starter-template.css" rel="stylesheet">
+  </head>
+
+  <body role="document">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Navigation ein-/ausblenden</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">peinjector-control</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.htm">start</a></li>
+            <li><a href="injector.htm">injector</a></li>
+            <li class="active"><a href="shellcode.htm">shellcode</a></li>
+            <li><a href="settings.htm">settings</a></li>
+            <li><a href="about.htm">about</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav><!-- END Navbar -->
+
+
+    <!-- main container -->
+    <div class="container theme-showcase" role="main">
+      
+      <div class="page-header">
+        <h2>active shellcode</h2>
+      </div>
+      
+      <!-- live Status -->
+      <div class="row">  <!-- row 3 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">x86 shellcode</div>
+            <div class="panel-body">
+              Name: <span id="status_32bit_name">loading...</span><br>
+              Counter: <span id="status_32bit_counter">loading...</span>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">x64 shellcode</div>
+            <div class="panel-body">
+              Name: <span id="status_64bit_name">loading...</span><br>
+              Counter: <span id="status_64bit_counter">loading...</span>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+      
+      
+      <div class="page-header">
+        <h2>shellcode factory</h2>
+      </div>
+      
+      <!-- module 1 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">reverse shell (tcp)</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="reverse_shell_tcp_name" value="reverse shell (tcp)" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>host</label>
+                <input type="text" id="reverse_shell_tcp_host" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>port</label>
+                <input type="number" id="reverse_shell_tcp_port" class="form-control" min="1" max="65535">
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="reverse_shell_tcp_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="reverse_shell_tcp_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="reverse_shell_tcp_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="reverse_shell_tcp_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  metasploit windows/shell_reverse_tcp<br>
+                  Spawns a reverse shell (Windows cmd, via tcp) which will try to connect to the given host:port. 
+                  Host must be an IPv4 address, the port must be between 1 and 65535.
+                </p>
+                <p>
+                  <u>listen command</u><br>
+                  <i>nc -lvp 1337</i>
+                </p>
+                <p>
+                  <u>alternativ listen command</u><br>
+                  <i>use payload/windows/shell_reverse_tcp<br>
+                  msf payload(shell_reverse_tcp) > set lhost 0.0.0.0<br>
+                  msf payload(shell_reverse_tcp) > set lport 1337<br>
+                msf payload(shell_reverse_tcp) > run</i>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="reverse_shell_tcp_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+      
+      
+      <!-- module 2 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">reverse tcp stager (threaded)</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="reverse_tcp_stager_threaded_name" value="reverse tcp stager (threaded)" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>host</label>
+                <input type="text" id="reverse_tcp_stager_threaded_host" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>port</label>
+                <input type="number" id="reverse_tcp_stager_threaded_port" class="form-control" min="1" max="65535">
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="reverse_tcp_stager_threaded_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="reverse_tcp_stager_threaded_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="reverse_tcp_stager_threaded_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="reverse_tcp_stager_threaded_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  Reverse tcp stager which will try to connect to the given host:port.
+                  Can be used with windows/shell/reverse_tcp or windows/meterpreter/reverse_tcp payloads from metasploit.
+                  Host must be an IPv4 address, the port must be between 1 and 65535.
+                </p>
+                <p>
+                  <u>references</u><br>
+                  <a href="https://github.com/stephenfewer/ReflectiveDLLInjection" target="_blank" style="target-new: tab;">https://github.com/stephenfewer/ReflectiveDLLInjection</a><br>
+                  <a href="https://github.com/rapid7/ReflectiveDLLInjection" target="_blank" style="target-new: tab;">https://github.com/rapid7/ReflectiveDLLInjection</a>
+                </p>
+                <p>
+                  <u>listen commands</u><br>
+                  <i>msf > use payload/windows/meterpreter/reverse_tcp<br>
+                  msf payload(reverse_tcp) > set lhost 0.0.0.0<br>
+                  msf payload(reverse_tcp) > set lport 1337<br>
+                msf payload(reverse_tcp) > run</i>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="reverse_tcp_stager_threaded_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+
+
+      <!-- module 3 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">reverse meterpreter (https, threaded)</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="reverse_meterpreter_https_threaded_name" value="reverse meterpreter (https, threaded)" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>host</label>
+                <input type="text" id="reverse_meterpreter_https_threaded_host" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>port</label>
+                <input type="number" id="reverse_meterpreter_https_threaded_port" class="form-control" min="1" max="65535">
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="reverse_meterpreter_https_threaded_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="reverse_meterpreter_https_threaded_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="reverse_meterpreter_https_threaded_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="reverse_meterpreter_https_threaded_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  Traditional meterpreter reverse https shellcode. Will try to connect to the given host:port. Inject the meterpreter server DLL via the Reflective Dll Injection payload (staged). 
+                  Tunnel communication over HTTPS (Windows wininet)
+                  Host must be an IPv4 address, the port must be between 1 and 65535.
+                </p>
+                <p>
+                  <u>references</u><br>
+                  <a href="https://github.com/stephenfewer/ReflectiveDLLInjection" target="_blank" style="target-new: tab;">https://github.com/stephenfewer/ReflectiveDLLInjection</a><br>
+                  <a href="https://github.com/rapid7/ReflectiveDLLInjection" target="_blank" style="target-new: tab;">https://github.com/rapid7/ReflectiveDLLInjection</a>
+                </p>
+                <p>
+                  <u>listen commands</u><br>
+                  <i>msf > use payload/windows/meterpreter/reverse_https<br>
+                  msf payload(reverse_https) > set lhost 0.0.0.0<br>
+                  msf payload(reverse_https) > set lport 1337<br>
+                msf payload(reverse_https) > run</i>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="reverse_meterpreter_https_threaded_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+      
+      <!-- module 4 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">user supplied shellcode</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="user_supplied_shellcode_name" value="user supplied shellcode" class="form-control">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="user_supplied_shellcode_host" class="form-control" value="127.0.0.1">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="user_supplied_shellcode_port" class="form-control" min="1" max="65535" value="1234">
+              </div>
+              <div class="form-group">
+                <label>user supplied shellcode (HEXstring)</label>
+                <textarea id="user_supplied_shellcode_textarea" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="user_supplied_shellcode_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="user_supplied_shellcode_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="user_supplied_shellcode_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="user_supplied_shellcode_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  User supplied shellcode. Just paste shellcode as hex string.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="user_supplied_shellcode_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+      
+      <!-- module 5 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">user supplied shellcode (threaded)</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="user_supplied_shellcode_threaded_name" value="user supplied shellcode (threaded)" class="form-control">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="user_supplied_shellcode_threaded_host" class="form-control" value="127.0.0.1">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="user_supplied_shellcode_threaded_port" class="form-control" min="1" max="65535" value="1234">
+              </div>
+              <div class="form-group">
+                <label>user supplied shellcode (HEXstring)</label>
+                <textarea id="user_supplied_shellcode_threaded_textarea" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="user_supplied_shellcode_threaded_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="user_supplied_shellcode_threaded_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="user_supplied_shellcode_threaded_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="user_supplied_shellcode_threaded_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  User supplied shellcode. Just paste shellcode as hex string. It will be injected as new thread. Make sure to use a process safe exit function.
+                </p>
+                <p>
+                  <u>references</u><br>
+                  <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659(v=vs.85).aspx" target="_blank" style="target-new: tab;">https://msdn.microsoft.com/en-us/library/windows/desktop/ms682659(v=vs.85).aspx</a><br>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="user_supplied_shellcode_threaded_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+      
+      <!-- module 6 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">demo (nop)</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="demo_nop_name" value="demo (nop)" class="form-control">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="demo_nop_host" class="form-control" value="127.0.0.1">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="demo_nop_port" class="form-control" min="1" max="65535" value="1234">
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="demo_nop_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="demo_nop_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="demo_nop_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="demo_nop_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  Injects a NOP (Debugging purposes)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="demo_nop_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+      
+      <!-- module 7 -->
+      <div class="panel panel-primary">
+        <div class="panel-heading">demo (calc)</div>
+        <div class="panel-body">
+
+          <!-- user input -->
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label>name</label>
+                <input type="text" id="demo_calc_name" value="demo (calc)" class="form-control">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="demo_calc_host" class="form-control" value="127.0.0.1">
+              </div>
+              <div class="form-group">
+                <input type="hidden" id="demo_calc_port" class="form-control" min="1" max="65535" value="1234">
+              </div>
+              <div class="form-group">
+                <div class="checkbox"><label><input type="hidden" id="demo_calc_xor"></label></div>
+              </div>
+              <div class="form-group">
+                <label>architecture</label>
+                <div class="radio"><label><input type="radio" name="demo_calc_system" value="x86x64" checked="checked">x86+x64</label></div>
+                <div class="radio"><label><input type="radio" name="demo_calc_system" value="x86">x86 only</label></div>
+                <div class="radio"><label><input type="radio" name="demo_calc_system" value="x64">x64 only</label></div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              &nbsp;
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>description</label>
+                <p>
+                  Injects a classic execute calc.exe shellcode
+                </p>
+                <p>
+                  <u>references</u><br>
+                  <a href="https://github.com/peterferrie/win-exec-calc-shellcode" target="_blank" style="target-new: tab;">https://github.com/peterferrie/win-exec-calc-shellcode</a><br>
+                </p>
+                <p>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="row">
+            <div class="col-md-8">
+              &nbsp;
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="demo_calc_selectshell">create and send shellcode</button>
+            </div>
+          </div>
+          
+        </div> <!-- END body -->
+      </div> <!-- END modul -->
+
+    </div> <!-- END main container -->
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    
+
+    <!-- Bootstrap-JavaScript
+    ================================================== -->
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    
+    <!-- My JavaScript
+    ================================================== -->
+    <script src="js/injector.js"></script>
+    <script src="js/shellcode.js"></script>
+    <script src="js/getconfig.js"></script>
+    
+  </body>
+</html>

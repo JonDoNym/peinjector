@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- ^ this 3 Meta-Tags firstn;  -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>peinjector-control</title>
+
+    <!-- Bootstrap-CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap-Theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- second Theme -->
+    <link href="css/starter-template.css" rel="stylesheet">
+  </head>
+
+  <body role="document">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Navigation ein-/ausblenden</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">peinjector-control</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.htm">start</a></li>
+            <li class="active"><a href="injector.htm">injector</a></li>
+            <li><a href="shellcode.htm">shellcode</a></li>
+            <li><a href="settings.htm">settings</a></li>
+            <li><a href="about.htm">about</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav><!-- END Navbar -->
+
+
+    <!-- main container -->
+    <div class="container theme-showcase" role="main">
+      
+
+      <!-- Injector Ports -->
+      <div class="page-header">
+        <h2>injector ports</h2>
+      </div>
+      
+      <div class="row">  <!-- row: CONTROL Port -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">control port</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-7">
+                <div class="input-group">
+                  <input type="number" id="controlport_TXT1" class="form-control" placeholder="loading..." min="1" max="65535">
+                  <span class="input-group-btn">
+                    <button type="button" id="controlport_TXT2" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <p>Port on which the server listens for control commands (Like from this interface)</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">control interface</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-5">
+                <div class="btn-group">
+                  <button type="button" id="controlinterface_LOCAL" class="btn btn-info disabled">local</button>
+                  <button type="button" id="controlinterface_GLOBAL" class="btn btn-warning disabled">global</button>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <p>Sets the server to listen locally (loopback, 127.0.0.1) or globally (any, 0.0.0.0)</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+
+      <div class="row">  <!-- row: DATA Port -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">data port</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-7">
+                <div class="input-group">
+                  <input type="number" id="dataport_TXT1" class="form-control" placeholder="loading..." min="1" max="65535">
+                  <span class="input-group-btn">
+                    <button type="button" id="dataport_TXT2" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <p>Port on which the server listens for raw data (PE files/headers)</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">data interface</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-5">
+                <div class="btn-group">
+                  <button type="button" id="datainterface_LOCAL" class="btn btn-info disabled">local</button>
+                  <button type="button" id="datainterface_GLOBAL" class="btn btn-warning disabled">global</button>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <p>Sets the server to listen locally (loopback, 127.0.0.1) or globally (any, 0.0.0.0)</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+      
+      <div class="row">  <!-- row: Token -->
+        <div class="col-sm-12">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">access token</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-lg-9">
+                <div class="input-group input-group-sm">
+                  <input type="text" id="token_TXT1" class="form-control" placeholder="loading..." maxlength="64">
+                  <span class="input-group-btn">
+                    <button type="button" id="token_CLS" class="btn btn-danger"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Clear</button>
+                    <button type="button" id="token_GEN" class="btn btn-primary"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Generate</button>
+                    <button type="button" id="token_TXT2" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <p>API Key</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  <!-- END row --> 
+
+
+      <!-- Injector Flags -->
+      <div class="page-header">
+        <h2>injector flags</h2>
+      </div>
+
+      <div class="row">  <!-- row 1 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">remove integrity checks</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="removeintegity_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="removeintegity_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Remove integrated integrity checks, such as PE header checksums, certificates, force-check-checksum-flag, ...</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">alignment method</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="alignment_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="alignment_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Try to inject the shellcode at the end of an executable section. This is possible because of the gap between the SizeOfRawData and the VirtualSize value.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+
+      <div class="row">  <!-- row 2 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">alignment resize method</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="alignmentresize_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="alignmentresize_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Try to resize an executable section and to inject the shellcode there. This is possible because of the gap between the FileAlignment and the SectionAlignment value.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">new section method</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="newsection_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="newsection_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Insert a new section and inject the shellcode there.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+
+      <div class="row">  <!-- row 3 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">change flags method</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="changeflags_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="changeflags_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Change unmatching section flags. Might be required for "alignment method" and "alignment resize method" flags.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">skip detecting executables</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="trystaystealth_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="trystaystealth_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Try to discover if the executable could possibly detect infection (e.g. NSIS setups) and skip the executable.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+
+      <div class="row">  <!-- row 3 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">random section name</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="randomsectionname_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="randomsectionname_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Generate a random name for sections created by the "new section name" flag.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">new section name</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" id="sectionname_TXT1" class="form-control">
+                  <span class="input-group-btn">
+                    <button type="button" id="sectionname_TXT2" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p>Set a static name for sections created by the "new section method" flag.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+      
+      <div class="row">  <!-- row 3 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">cross section jump</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="crosssectionjump_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="crosssectionjump_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Inject shellcode with one of the enabled methods and insert an obfuscated jump to the payload in another section. The EP doesn't point to the shellcode now, but this can increase some AV's heuristic detection rate.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">cross section jump iterations</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="number" id="crosssectionjumpiterations_TXT1" class="form-control" placeholder="loading..." min="1" max="64">
+                  <span class="input-group-btn">
+                    <button type="button" id="crosssectionjumpiterations_TXT2" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p>Set how many jump-indirections should be inserted before the shellcode (1-64, 1-5 should be enough, increasing this value can improve some AV's heuristic detection rate).</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+
+      <div class="row">  <!-- row 3 -->
+        <div class="col-sm-6">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">encrypt shellcode</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <button type="button" id="enableencrypt_ON" class="btn btn-success disabled">ON</button>
+                  <button type="button" id="enableencrypt_OFF" class="btn btn-danger disabled">OFF</button>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <p>Encrypt payload with random keys. The decryption stub is generated and obfuscated individually on-the-fly for each injection, using the integrated polymorphic engine.</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-sm-6">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">shellcode encryption iterations</h3>
+            </div>
+            <div class="panel-body">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="number" id="encryptiterations_TXT1" class="form-control" placeholder="loading..." min="1" max="16">
+                  <span class="input-group-btn">
+                    <button type="button" i="encryptiterations_TXT2" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Save</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p>Set how many encryption iterations should be applied (1-16, 1-3 should be enough, increasing this value can improve some AV's heuristic detection rate).</p>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+   
+      
+      <!-- Admin Settings -->
+      <div class="page-header">
+        <h2>admin settings</h2>
+      </div>
+
+      <div class="row">  <!-- row -->
+        <div class="col-md-3">  <!-- Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">globally enable injection</h3>
+            </div>
+            <div class="panel-body">
+              <div class="text-center">
+                <div class="btn-group">
+                  <button type="button" id="enable_ON" class="btn btn-success btn-lg disabled">ON</button>
+                  <button type="button" id="enable_OFF" class="btn btn-danger btn-lg disabled">OFF</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  <!-- END Left -->
+        <div class="col-md-3">  <!-- middle-Left Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">injector restart</h3>
+            </div>
+            <div class="panel-body">
+              <button type="button" class="btn btn-primary btn-lg center-block" data-toggle="modal" data-target="#myModal">Restart</button>
+            </div>
+          </div>
+        </div>  <!-- END middle-Left -->
+        <div class="col-md-3">  <!-- middle-Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">export config</h3>
+            </div>
+            <div class="panel-body">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="inj_export_button">Export</button>
+            </div>
+          </div>
+        </div>  <!-- END middle-Right -->
+        <div class="col-md-3">  <!-- Right Panel -->
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">import config</h3>
+            </div>
+            <div class="panel-body">
+              <button type="button" class="btn btn-primary btn-lg center-block" id="inj_import_button">Import</button>
+            </div>
+          </div>
+        </div>  <!-- END Right -->
+      </div>  <!-- END row --> 
+      
+      <!-- HIDDEN RESTART BOX -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Injector restart?</h4>
+            </div>
+            <div class="modal-body">
+              <p>
+                If the ports or interfaces set incorrectly you won't be able to contact the server through this interface.
+                If you've changed the control port you'll have to adjust the settings of this interface too.
+              </p>
+              <p>Do you really want to restart the server?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal" id="inj_restart_button">Restart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div> <!-- END main container -->
+
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <!-- Bootstrap-JavaScript
+    ================================================== -->
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    
+    <!-- My JavaScript
+    ================================================== -->
+    <script src="js/injector.js"></script>
+    <script src="js/getconfig.js"></script>
+    
+  </body>
+</html>

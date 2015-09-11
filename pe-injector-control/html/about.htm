@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- ^ this 3 Meta-Tags firstn;  -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>peinjector-control</title>
+
+    <!-- Bootstrap-CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap-Theme -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- second Theme -->
+    <link href="css/starter-template.css" rel="stylesheet">
+    <!-- ABOUT CSS -->
+    <style>
+      pre {min-width:420px; background-color:#000000; color:#00FF00; font-size: 0.53em; font-family: Fixedsys,Courier,monospace; padding:10px;}
+    </style>
+  </head>
+
+  <body role="document">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Navigation ein-/ausblenden</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">peinjector-control</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.htm">start</a></li>
+            <li><a href="injector.htm">injector</a></li>
+            <li><a href="shellcode.htm">shellcode</a></li>
+            <li><a href="settings.htm">settings</a></li>
+            <li class="active"><a href="about.htm">about</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav><!-- END Navbar -->
+
+
+    <!-- main container -->
+    <div class="container theme-showcase" role="main">
+      
+      
+      <!-- logo -->
+      <div class="starter-template">
+        
+        <pre><b><code id="asciilogo">         ,x-"F   ]    Ax^" q    hp"  `u jM""u    a^ ^, j"  "*g_   p  ^mg_   N    "-x,         
+           jLs*^6   `_  _&*"  q  _,NF   "wp"    "*g"   _NL_  p  "-d_   F   ]"*u_F             
+            ]   J_,x-E   3_  jN^" `u _w^*_  _R"""R_  _J^w_ j"  "pL_  f   7^-L_F   #__         
+         w*^0   4   9__sAF" `L  _Dr"  m__m""q_,,_a^"m__*  "qA_  j" ""Au__f   J   0^           
+            #_,J@^""p  `_ _jp-""q  _Dw^" ^cj*"  "*,j^  "p#_  y""^wE_ _F   F"^qN,_j            
+            L  ]   k,w@#"""_  "_a*^E   ba-" ^qjqj-""^pe"  J^-u_f  _f "q@w,j   f  jL _         
+         -,Jp*^#""9   L  5_a*N"""q__INr" "q_e^"^"*,p^""qME_ y"""p6u,f  j'  f "N^--LL          
+         _ t  J  __,Jb--N""",  *_s0M`""q_a@NW_@@_JP^u_p"""p4a,p" _F""V--wL,_F_ F  #           
+          r#^^0""E" 6  q  q__hg-@4""*,_Z*q_"^pwpwr""p*C__@""0N-qdL_p" p  J" 3""5^^0r-         
+           F Jp 9__b__M,Juw*w*^#^9#""EED*dP_@EZEZ@^E@*#EjP"5M"gM@p*Ww&,jL_J__f  F j           
+         rNrr4r*pr4r@grNr@q@Ng@q@N0@N#@NNMpmgg@@ggmqgNN@NN@#@4p*@M@p4qp@w@m@Mq@r#rq@r         
+          j  L 6 9""Q"#^q@NDNNNMpg----                  ----gggNNW#W4p^p@jF"P"]"j  F          
+         a0,3_j_j_9FN@N@0NMp--                                  --ggNZNrNM"P_f_f_E,0a         
+         "0^#-LJ_9"NNNMp--                                           -gN#@#"R_#g@q^9"         
+         _F`@q4WBN@Np-                                                  -gNN@ZL#p"Fj_         
+         JLE5@WRNp                                                          g@NNNF3_L         
+         4JF@NNp- ---------------------------------------------------------- -g0WNNL@         
+         40NNh-    ____  _____ _____    _____ _____ _____ ____  _____ _____    -gN#B0         
+         NN#p     |    \|     |   __|  |  |  |   __|  _  |    \|   __| __  |     j0NN         
+         ##       |  |  |  |  |__   |  |     |   __|     |  |  |   __|    -|       d#         
+        J#        |____/|_____|_____|  |__|__|_____|__|__|____/|_____|__|__|        #L        
+       J#                                                                            #L       
+      J# ---------------------------------------------------------------------------- #L      
+     J#               _____ _____    _____ _____ _____ ____  _____ _____               #L     
+    J#               |  _  |   __|  |  |  |   __|  _  |    \|   __| __  |               #L    
+   J#                |   __|   __|  |     |   __|     |  |  |   __|    -|                #L   
+  J#                 |__|  |_____|  |__|_ _,.-----.,_ |____/|_____|__|__|                 #L  
+ J#                                    ,-~           ~-.                                   #L 
+'# --------------------------------- ,^___           ___^. -------------------------------- #'
+t#  _____ _____ _____ _____ _____   /~"   ~"   .   "~   "~\  _____ _____ ____  _____ _____  #j
+t# |     |  _  |_   _|     |     | Y  ,--._    I    _.--.  Y    __|  _  |    \|   __| __  | #j
+t# |  |  |   __| | | |-   -|  |  | | Y     ~-. | ,-~     Y |    __|     |  |  |   __|    -| #j
+t# |_____|__|    |_| |_____|_____| | |        }:{        | | _____|__|__|____/|_____|__|__| #j
+.#                                 j l       / | \       ! l                                #'
+ Y#---------------------------- .-~  (__,.--" .^. "--.,__)  ~-. -------------------------- #Y 
+  Y#      _____ _____ _____ ___(           / / | \ \           ) _ _____ __    _____      #Y  
+   Y#    |   __|   __|     |_   \.____,   ~  \/"\/  ~   .____,/   | __  |  |  |   __|    #Y   
+    Y#   |__   |   __|   --| | | ^.____                 ____.^    | __ -|  |__|   __|   #Y    
+     Y#  |_____|_____|_____| |_| |_ | |T ~\  !   !  /~ T| | |__|__|_____|_____|_____|  #Y     
+      Y#                            | |l   _ _ _ _ _   !| |                           #Y      
+       Y#, ------------------------ | l \/V V V V V V\/ j | ----------------------- ,#Y       
+        Y#            _____ _____ _ l  \ \|_|_|_|_|_|/ /  ! ___    ___              #Y        
+        t#           |   __|   __|   \  \[T T T T T TI/  /   | |  |   |             #j        
+        t#           |__   |   __|   -\  `^-^-^-^-^-^'  /  | | |  | | |             #j        
+        t#           |_____|_____|____ \               / |_|___|  |___|             #j        
+        t#                              \.           ,/                             #j        
+        t# ------------------------------ "^-.___,-^" ----------------------------- #j        
+        t#            _____ _____ _____ _____ _____ _____ _____    ___              #j        
+        t#           |   __|   __|     |_   _|     |     |   | |  |_  |             #j        
+        t#           |__   |   __|   --| | | |-   -|  |  | | | |   _| |_            #j        
+        t#           |_____|_____|_____| |_| |_____|_____|_|___|  |_____|           #j        
+        '#_                                                                         #'        
+         ##_ --------------------------------------------------------------------- d#         
+         NN#p         _____ _____ _____ _____ _____ _____ _____    _____         j0NN         
+         40NNh_      |   __|   __|     |_   _|     |     |   | |  |   | |      _gN#B0         
+         4JF@NNp_    |__   |   __|   --| | | |-   -|  |  | | | |  | | | |    _g0WNNL@         
+         JLE5@WRNp_  |_____|_____|_____| |_| |_____|_____|_|___|  |_|___|  _g@NNNF3_L         
+         _F`@q4WBN@Np_                                                  _gNN@ZL#p"Fj_         
+         "0^#-LJ_9"NNNMp__ ----------------------------------------- _gN#@#"R_#g@q^9"         
+         a0,3_j_j_9FN@N@0NMp__                                  __ggNZNrNM"P_f_f_E,0a         
+          j  L 6 9""Q"#^q@NDNNNMpg____                  ____gggNNW#W4p^p@jF"P"]"j  F          
+         rNrr4r*pr4r@grNr@q@Ng@q@N0@N#@NNMpmgg@@ggmqgNN@NN@#@4p*@M@p4qp@w@m@Mq@r#rq@r         
+           F Jp 9__b__M,Juw*w*^#^9#""EED*dP_@EZEZ@^E@*#EjP"5M"gM@p*Ww&,jL_J__f  F j           
+         -r#^^0""E" 6  q  q__hg-@4""*,_Z*q_"^pwpwr""p*C__@""0N-qdL_p" p  J" 3""5^^0r-         
+           t  J  __,Jb--N""",  *_s0M`""q_a@NW_@@_JP^u_p"""p4a,p" _F""V--wL,_F_ F  #           
+         _,Jp*^#""9   L  5_a*N"""q__INr" "q_e^"^"*,p^""qME_ y"""p6u,f  j'  f "N^--LL_         
+            L  ]   k,w@#"""_  "_a*^E   ba-" ^qjqj-""^pe"  J^-u_f  _f "q@w,j   f  jL           
+            #_,J@^""p  `_ _jp-""q  _Dw^" ^cj*"  "*,j^  "p#_  y""^wE_ _F   F"^qN,_j            
+         w*^0   4   9__sAF" `L  _Dr"  m__m""q_,,_a^"m__*  "qA_  j" ""Au__f   J   0^--         
+            ]   J_,x-E   3_  jN^" `u _w^*_  _R"""R_  _J^w_ j"  "pL_  f   7^-L_F   #           
+           jLs*^6   `_  _&*"  q  _,NF   "wp"    "*g"   _NL_  p  "-d_   F   ]"*u_F             </code></b></pre>
+        <br/><center><b> - Authors: A.A. - G.A. - L.W. - S.J. - <b></center><br/>
+                <center><b> - Version 1.0 - <b></center><br/>
+        <audio id="audiocontrol" loop>
+          <source src="music/meric_skiff-resistor_arpanauts.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        
+    </div> <!-- END main container -->
+
+
+    <!-- Bootstrap-JavaScript
+    ================================================== -->
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    
+    <!-- My JavaScript
+    ================================================== -->
+    <script type="text/javascript">
+      /**
+       * Returns a random integer between min (inclusive) and max (inclusive)
+       * Using Math.round() will give you a non-uniform distribution!
+       */
+      function getRandomInt(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      
+      // playlist
+      var playlist = [
+        "music/meric_skiff-resistor_arpanauts.mp3",
+        "music/meric_skiff-resistor2_digital_native.mp3",
+        "music/meric_skiff-resistor2_hhavok-intro.mp3",
+        "music/meric_skiff-resistor2_jumpshot.mp3"
+        ];
+        
+      // start player with random music
+      var audioobj = document.getElementById("audiocontrol");
+      audioobj.src = playlist[getRandomInt(0,playlist.length-1)];
+      audioobj.play(); 
+      
+      // scroll logo
+      var logoobj = document.getElementById("asciilogo");
+      setInterval(function(){
+        var array = logoobj.innerHTML.split("\n");
+        logoobj.innerHTML = "";
+        for(i=1; i<array.length; i++) {
+          logoobj.innerHTML += array[i] + "\n";
+        }
+        logoobj.innerHTML += array[0];
+      }, 100);
+    </script>
+
+  </body>
+</html>
