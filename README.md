@@ -7,6 +7,7 @@ The executable file format on the Windows platform is PE COFF. The peinjector pr
 -	Full x86 and x64 PE file support.
 -	Open Source
 -	Fully working on Windows and Linux, including automated installation scripts.
+-	Can be  operated on embedded hardware, tested on a Rasperberry Pi 2.
 -	On Linux, all servers will be automatically integrated as service, no manual configuration required.
 -	Plain C, no external libraries required (peinjector). 
 -	MITM integration is available in C, Python and Java. A sample Python MITM implementation is included.
