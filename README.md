@@ -1,13 +1,13 @@
 # peinjector
 
 ## Description
-The executable file format on the Windows platform is PE COFF. The peinjector provides different ways to infect these files with custom payloads without changing the original functionality. It creates patches, which are then applied **seamlessly during file transfer**. It is very performant, lightweight, modular and can be operated on embedded hardware.	
+The executable file format on the Windows platform is PE COFF. The peinjector provides different ways to infect these files with custom payloads without changing the original functionality. It creates patches, which are then applied **seamlessly during file transfer**. It is very performant, lightweight, modular and can be **[operated on embedded hardware](https://github.com/JonDoNym/peinjector/wiki/Guide:-Raspberry-Pi-image)**.	
 
 ## Features
 -	Full x86 and x64 PE file support.
 -	Open Source
 -	Fully working on Windows and Linux, including automated installation scripts.
--	Can be  operated on embedded hardware, tested on a Rasperberry Pi 2.
+-	Can be  operated on embedded hardware, tested on a [Rasperberry Pi 2](https://github.com/JonDoNym/peinjector/wiki/Guide:-Raspberry-Pi-image).
 -	On Linux, all servers will be automatically integrated as service, no manual configuration required.
 -	Plain C, no external libraries required (peinjector). 
 -	MITM integration is available in C, Python and Java. A sample Python MITM implementation is included.
