@@ -16,7 +16,7 @@ The executable file format on the Windows platform is PE COFF. The peinjector pr
 -	An awesome about page and much more, check it out.
 
 ## Installation
-[Installation Guide](https://github.com/JonDoNym/peinjector/wiki/Guide:-installation-(Ubuntu-14.04))
+[Installation Guide](https://github.com/JonDoNym/peinjector/wiki/Guide:-full-installation)
 
 ## Contact the developers on
 ```
