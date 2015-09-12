@@ -15,6 +15,9 @@ The executable file format on the Windows platform is PE COFF. The peinjector pr
 -	Easy to use integrated shellcode factory, including reverse shells, meterpreter, ... or own shellcode. Everything is available in 32 and 64 bit with optional automated encryption. Custom shellcode can be injected directly or as a new thread. 
 -	An awesome about page and much more, check it out.
 
+## Installation
+[Installation Guide](https://github.com/JonDoNym/peinjector/wiki/Guide:-installation-(Ubuntu-14.04))
+
 ## peinjector
                                       + configuration                  
                                       | payload                        
