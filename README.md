@@ -18,6 +18,9 @@ The executable file format on the Windows platform is PE COFF. The peinjector pr
 ## Installation
 [Installation Guide](https://github.com/JonDoNym/peinjector/wiki/Guide:-full-installation)
 
+## Screenshots
+[Screenshots](https://github.com/JonDoNym/peinjector/wiki/Screenshots)
+
 ## Contact the developers on
 ```
 anon.zMisc@gmail.com
