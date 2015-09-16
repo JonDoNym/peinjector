@@ -93,7 +93,9 @@ static inline void __peserver_debug(PESERVER *server, int sock, char *msg, ...) 
   tm_info = localtime(&timer);
   strftime(buffer, 29, "[%Y:%m:%d %H:%M:%S] ", tm_info);
 
-  pthread_mutex_lock(&server->debug_mutex);
+  if (pthread_mutex_lock(&server->debug_mutex)) {
+    return; /* Error locking mutex */
+  }
   /* print timestamp */
   printf("%s", buffer);
   if (sock != 0) {
@@ -286,14 +288,19 @@ static void *__peserver_server_handler(void *data) {
 
   /* Bind */
   if (bind(socket_desc, (struct sockaddr *) &server, sizeof(server)) < 0) {
-    __peserver_debug(peserver, socket_desc, "[INIT] Bind socket failed (Port %d)\n", port);
+    __peserver_debug(peserver, socket_desc, "[INIT] Listen socket failed (Port %d)\n", port);
     shandler->launch_ok = false;
     sem_post(&shandler->signal);
     return NULL;
   }
 
   /* Listen */
-  listen(socket_desc, connection_queue);
+  if (listen(socket_desc, connection_queue)) {
+    __peserver_debug(peserver, socket_desc, "[INIT] Bind socket failed (Port %d)\n", port);
+    shandler->launch_ok = false;
+    sem_post(&shandler->signal);
+    return NULL;
+  }
 
   /* Signal everything ok */
   shandler->launch_ok = true;
@@ -586,7 +593,9 @@ void peserver_write_config(PESERVER *server) {
   __peserver_convert_token(peserver_get_token(server), hextoken, false);
 
   /* Lock Mutex */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* Names */
   ini_puts("name", "section_name", peinfect_get_sectionname(server->infect), server->config->config_name);
@@ -673,7 +682,9 @@ bool peserver_wait(PESERVER *server) {
   bool server_terminating = false;
 
   /* Register watcher if not terminating  */
-  pthread_mutex_lock(&server->mutex);
+  if (pthread_mutex_lock(&server->mutex)) {
+    return false; /* Error locking mutex */
+  }
   server_terminating = server->terminating;
   if (!server_terminating) {
     server->watchers++;
@@ -697,7 +708,9 @@ void peserver_terminate(bool restart, PESERVER *server) {
 
   /* Signalizes termination, no more watchers will be able to register */
   __peserver_debug(server, 0, "[SRV] Initialize termination sequence\n");
-  pthread_mutex_lock(&server->mutex);
+  if (pthread_mutex_lock(&server->mutex)) {
+    return; /* Error locking mutex */
+  }
   if (server->terminating) {
     pthread_mutex_unlock(&server->mutex);
     return;

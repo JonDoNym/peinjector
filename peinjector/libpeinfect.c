@@ -1144,32 +1144,33 @@ bool peinfect_infect_full_file(char *infile, PEINFECT *in, char *outfile) {
   if (fh != NULL) {
 
     /* Get file size and allocate buffer */
-    fseek(fh, 0L, SEEK_END);
-    size_t size = ftell(fh);
-    size_t read_size = 0;
-    rewind(fh);
-    file_mem = malloc(size);
+    if (!fseek(fh, 0L, SEEK_END)) {
+      size_t size = ftell(fh);
+      size_t read_size = 0;
+      rewind(fh);
+      file_mem = malloc(size);
 
-    if (file_mem != NULL) {
-      /* Load file into buffer */
-      read_size = fread(file_mem, size, 1, fh);
-      fclose(fh);
-      fh = NULL;
+      if (file_mem != NULL) {
+        /* Load file into buffer */
+        read_size = fread(file_mem, size, 1, fh);
+        fclose(fh);
+        fh = NULL;
 
-      /* Process file in memory */
-      if (read_size == 1) {
-        returnVar = peinfect_infect_full(file_mem, size, in, &pefile);
-      }
-      
-      /* free buffer after use */
-      free(file_mem);
+        /* Process file in memory */
+        if (read_size == 1) {
+          returnVar = peinfect_infect_full(file_mem, size, in, &pefile);
+        }
 
-      /* Write file to disk*/
-      if (returnVar) {
-        returnVar = pefile_write_file(&pefile, NULL, outfile);
+        /* free buffer after use */
+        free(file_mem);
 
-        /* Free PE File */
-        pefile_free(&pefile);
+        /* Write file to disk*/
+        if (returnVar) {
+          returnVar = pefile_write_file(&pefile, NULL, outfile);
+
+          /* Free PE File */
+          pefile_free(&pefile);
+        }
       }
     }
 
@@ -1297,41 +1298,42 @@ bool peinfect_infect_patch_file(char *infile, PEINFECT *in) {
   if (fh != NULL) {
 
     /* Get file size and allocate buffer */
-    fseek(fh, 0L, SEEK_END);
-    size_t size = MAX(ftell(fh), 4096);
-    size_t read_size = 0;
-    rewind(fh);
-    file_mem = malloc(size);
+    if (!fseek(fh, 0L, SEEK_END)) {
+      size_t size = MAX(ftell(fh), 4096);
+      size_t read_size = 0;
+      rewind(fh);
+      file_mem = malloc(size);
 
-    if (file_mem != NULL) {
-      /* Load file into buffer */
-      read_size = fread(file_mem, size, 1, fh);
-      fclose(fh);
-      fh = NULL;
+      if (file_mem != NULL) {
+        /* Load file into buffer */
+        read_size = fread(file_mem, size, 1, fh);
+        fclose(fh);
+        fh = NULL;
 
-      /* Process file in memory */
-      if (read_size == 1) {
-        returnVar = peinfect_infect_patch(file_mem, size, in, &patch);
-      }
-      
-      /* free buffer after use */
-      free(file_mem);
-
-      /* Free */
-      if (returnVar) {
-
-        /* Debug Patch*/
-        __peinfect_patch_show_dbg(&patch);
-
-        if (peinfect_patch_serialize(&patch, mem_ref, &memsize)) {
-          printf("Serialized size: %d bytes\n\n", (uint32_t) memsize);
-          if (mem) {
-            free(mem);
-          }
+        /* Process file in memory */
+        if (read_size == 1) {
+          returnVar = peinfect_infect_patch(file_mem, size, in, &patch);
         }
 
-        /* Free patch */
-        peinfect_free_patch(&patch);
+        /* free buffer after use */
+        free(file_mem);
+
+        /* Free */
+        if (returnVar) {
+
+          /* Debug Patch*/
+          __peinfect_patch_show_dbg(&patch);
+
+          if (peinfect_patch_serialize(&patch, mem_ref, &memsize)) {
+            printf("Serialized size: %d bytes\n\n", (uint32_t) memsize);
+            if (mem) {
+              free(mem);
+            }
+          }
+
+          /* Free patch */
+          peinfect_free_patch(&patch);
+        }
       }
     }
 

