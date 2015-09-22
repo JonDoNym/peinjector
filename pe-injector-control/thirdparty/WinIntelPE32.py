@@ -171,7 +171,7 @@ class winI32_shellcode():
                             b"\x58\x58\x90\x61"
                             )
 
-        self.shellcode1 += "\xe9"
+        self.shellcode1 += b"\xe9"
         self.shellcode1 += struct.pack("<I", len(self.shellcode2))
 
         return self.stackpreserve + self.shellcode1 + self.shellcode2
