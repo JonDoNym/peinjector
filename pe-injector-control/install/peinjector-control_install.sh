@@ -13,7 +13,7 @@ fi
 apt-get install -y python3
 
 # Check minimum python version
-if $(python3 -c 'import sys; print(1 if sys.hexversion<=0x03040000 else 0)'); then
+if [ $(python -c 'import sys; print(1 if sys.hexversion <= 34000000 else 0)') -eq 1 ] ; then
   echo "python 3.4 is required at least"
   exit 1
 fi
