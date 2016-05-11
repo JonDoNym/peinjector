@@ -575,7 +575,7 @@ unsigned char* peinfect_obfuscator_build_ep_jmp(PEFILE *pe, size_t *jmpsize) {
 
 unsigned char* peinfect_obfuscator_encrypt_payload(unsigned char *payload, size_t payloadsize, size_t *decryptersize,
 bool x64) {
-  static bool add_garbage = true;
+  bool add_garbage = false; /* temp. disable garbage insertion because of errors on x86 plattform */
   bool error = true;
   size_t i = 0;
   size_t totalsize = 0;
